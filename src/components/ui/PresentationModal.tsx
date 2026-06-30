@@ -9,28 +9,31 @@ import Image from 'next/image'
 
 const slides = [
   {
-    icon: <Play className="w-12 h-12 text-[#6ECEDA]" />,
-    title: 'MindWork para Investidores',
-    description: 'Bem-vindo ao MVP do MindWork! Esta é uma plataforma SaaS B2B focada no monitoramento do bem-estar mental e prevenção de burnout corporativo.',
+    icon: <X className="w-12 h-12 text-[#0F4C5C]" />,
+    title: 'Apresentação MindWork',
+    description: 'A solução definitiva para prever, intervir e monitorar a saúde mental corporativa.',
     image: null
   },
   {
     icon: <Shield className="w-12 h-12 text-[#81B29A]" />,
     title: 'Anonimato Garantido (Mobile-First)',
-    description: 'A fundação do MindWork é o anonimato. A experiência do funcionário é feita para celular, rápida e sem fricção.',
-    image: '/images/checkin_func.png'
+    description: 'Plataforma intuitiva e 100% anônima para que colaboradores façam check-ins de saúde mental com total segurança.',
+    image: '/images/checkin_func.jpeg',
+    imageAlt: 'Check-in do Funcionário MindWork'
   },
   {
     icon: <BarChart3 className="w-12 h-12 text-[#F2CC8F]" />,
     title: 'Inteligência para o RH',
-    description: 'O Dashboard agrega os dados por departamento. Se um setor começa a pontuar "Severo", o RH é alertado antes que os atestados comecem a chegar.',
-    image: '/images/dashboard_rh.png'
+    description: 'Monitoramento em tempo real do bem-estar da empresa, com mapas de risco e identificação proativa de setores vulneráveis.',
+    image: '/images/dashboard_rh.jpeg',
+    imageAlt: 'Dashboard de RH MindWork'
   },
   {
     icon: <Heart className="w-12 h-12 text-[#E07A5F]" />,
     title: 'Intervenção Precoce (Psicólogos)',
-    description: 'Encaminhamentos prioritários baseados no nível de risco (PHQ-9, GAD-7 e Maslach).',
-    image: '/images/painel_psicologo.png'
+    description: 'Acompanhamento integrado com profissionais, garantindo privacidade e suporte direto sem expor dados ao RH.',
+    image: '/images/painel_psicologo.jpeg',
+    imageAlt: 'Painel do Psicólogo MindWork'
   }
 ]
 
