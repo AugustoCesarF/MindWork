@@ -26,10 +26,17 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
   })
+
+  const handleDemoLogin = async () => {
+    setValue('email', 'rh@clinicavitalis-demo.com')
+    setValue('password', 'demo_password123')
+    await onSubmit({ email: 'rh@clinicavitalis-demo.com', password: 'demo_password123' })
+  }
 
   async function onSubmit(data: LoginFormData) {
     setError(null)
@@ -135,6 +142,14 @@ export default function LoginPage() {
           loading={isSubmitting}
         >
           {isSubmitting ? 'Entrando...' : 'Entrar'}
+        </Button>
+        <Button
+          type="button"
+          onClick={handleDemoLogin}
+          className="w-full bg-orange-500 hover:bg-orange-600 text-white shadow-lg"
+          size="lg"
+        >
+          Entrar na Demonstração (Clínica Vitalis)
         </Button>
       </form>
 

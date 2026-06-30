@@ -23,6 +23,7 @@ CREATE TABLE organizations (
   codigo_convite TEXT UNIQUE NOT NULL DEFAULT upper(substring(md5(random()::text) from 1 for 6)),
   ciclo_checkin ciclo_type NOT NULL DEFAULT 'quinzenal',
   logo_url TEXT,
+  is_demo BOOLEAN NOT NULL DEFAULT false,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -37,6 +38,7 @@ CREATE TABLE profiles (
   departamento TEXT,
   codigo_anonimo TEXT NOT NULL DEFAULT upper(substring(md5(random()::text || now()::text) from 1 for 8)),
   avatar_url TEXT,
+  is_demo BOOLEAN NOT NULL DEFAULT false,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -199,3 +201,18 @@ CREATE TRIGGER tr_referral_updated
   BEFORE UPDATE ON psychologist_referrals
   FOR EACH ROW
   EXECUTE FUNCTION fn_update_timestamp();
+
+-- ===================== DEMO RPC =====================
+CREATE OR REPLACE FUNCTION fix_demo_alerts_timestamps(org_id_param UUID)
+RETURNS void AS $$
+BEGIN
+  UPDATE risk_alerts ra
+  SET created_at = c.created_at
+  FROM checkins c
+  WHERE ra.employee_codigo_anonimo = (
+    SELECT codigo_anonimo FROM profiles WHERE id = c.employee_id LIMIT 1
+  )
+  AND ra.org_id = org_id_param
+  AND ra.created_at >= NOW() - INTERVAL '1 hour';
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;

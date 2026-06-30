@@ -1,9 +1,11 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import Sidebar from '@/components/layout/Sidebar'
 import Header from '@/components/layout/Header'
 
+
+import { createClient } from '@/lib/supabase/client'
 
 export default function DashboardLayout({
   children,
@@ -11,6 +13,21 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [isDemo, setIsDemo] = useState(false)
+
+  useEffect(() => {
+    async function checkDemo() {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        const { data: profile } = await supabase.from('profiles').select('is_demo').eq('id', user.id).single()
+        if (profile?.is_demo) {
+          setIsDemo(true)
+        }
+      }
+    }
+    checkDemo()
+  }, [])
 
   const handleCloseSidebar = useCallback(() => {
     setSidebarOpen(false)
@@ -18,6 +35,11 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-gray-50/80">
+      {isDemo && (
+        <div className="bg-orange-500 text-white text-center py-1 text-xs font-semibold uppercase tracking-wider sticky top-0 z-[100]">
+          Ambiente de Demonstração — Dados de Exemplo
+        </div>
+      )}
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={handleCloseSidebar} />
 
