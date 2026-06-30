@@ -1,8 +1,14 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { ClipboardCheck, BarChart3, Heart, Shield, CheckCircle2, ArrowRight } from 'lucide-react'
+import { ClipboardCheck, BarChart3, Heart, Shield, CheckCircle2, ArrowRight, Play } from 'lucide-react'
+import { PresentationModal } from '@/components/ui/PresentationModal'
 
 export default function LandingPage() {
+  const [showPresentation, setShowPresentation] = useState(false)
+
   return (
     <div className="min-h-screen bg-white font-inter">
       {/* Header */}
@@ -43,19 +49,32 @@ export default function LandingPage() {
               <p className="mt-6 text-lg leading-8 text-teal-100">
                 O MindWork monitora a saúde emocional dos seus colaboradores de forma anônima e segura, ajudando sua empresa a prevenir o burnout e criar um ambiente de trabalho mais saudável.
               </p>
-              <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Link href="/cadastro-empresa">
-                  <Button size="lg" className="bg-white text-[#0F4C5C] hover:bg-slate-100 text-base h-14 px-8 rounded-full shadow-xl shadow-teal-900/20">
+              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Button 
+                  size="lg" 
+                  onClick={() => setShowPresentation(true)}
+                  className="w-full sm:w-auto bg-orange-500 text-white hover:bg-orange-600 text-base h-14 px-8 rounded-full shadow-xl shadow-orange-900/20 flex items-center justify-center gap-2"
+                >
+                  <Play className="w-5 h-5" fill="currentColor" />
+                  Assistir Apresentação (Pitch)
+                </Button>
+                <Link href="/cadastro-empresa" className="w-full sm:w-auto">
+                  <Button size="lg" className="w-full bg-white text-[#0F4C5C] hover:bg-slate-100 text-base h-14 px-8 rounded-full shadow-xl shadow-teal-900/20">
                     Começar Gratuitamente
                   </Button>
                 </Link>
-                <Link href="/login" className="text-sm font-semibold leading-6 text-white hover:text-teal-200 transition-colors flex items-center">
-                  Já tenho uma conta <ArrowRight className="ml-2 h-4 w-4" />
+                <Link href="/login" className="text-sm font-semibold leading-6 text-white hover:text-teal-200 transition-colors flex items-center justify-center w-full sm:w-auto mt-2 sm:mt-0">
+                  Já tenho conta <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </div>
             </div>
           </div>
         </div>
+
+        <PresentationModal 
+          isOpen={showPresentation} 
+          onClose={() => setShowPresentation(false)} 
+        />
 
         {/* How it Works Section */}
         <div className="py-24 sm:py-32">

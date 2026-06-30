@@ -1,5 +1,6 @@
-import { LogOut, Leaf } from 'lucide-react'
+import { Leaf } from 'lucide-react'
 import Link from 'next/link'
+import LogoutButton from '@/components/layout/LogoutButton'
 
 export default function CheckinLayout({
   children,
@@ -30,19 +31,7 @@ export default function CheckinLayout({
               >
                 Meu Histórico
               </Link>
-              <form action="/auth/signout" method="post">
-                <button
-                  type="submit"
-                  className="
-                    flex items-center gap-1.5 px-3 py-1.5 rounded-lg
-                    text-sm text-slate-500 hover:text-slate-700
-                    hover:bg-slate-100 transition-all
-                  "
-                >
-                  <LogOut className="h-4 w-4" />
-                  <span className="hidden sm:inline">Sair</span>
-                </button>
-              </form>
+              <LogoutButton />
             </div>
           </div>
         </div>

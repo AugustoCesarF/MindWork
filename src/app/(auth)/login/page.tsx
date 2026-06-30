@@ -55,7 +55,7 @@ export default function LoginPage() {
         } else if (authError.message.includes('Email not confirmed')) {
           setError('E-mail ainda não confirmado. Verifique sua caixa de entrada.')
         } else {
-          setError('Erro ao fazer login. Tente novamente.')
+          setError(`Erro: ${authError.message}`)
         }
         return
       }

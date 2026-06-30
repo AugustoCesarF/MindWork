@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
 import {
   LayoutDashboard,
   AlertTriangle,
@@ -28,7 +29,14 @@ const NAV_ITEMS = [
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname()
+  const router = useRouter()
   const [collapsed, setCollapsed] = useState(false)
+
+  const handleLogout = async () => {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    router.push('/login')
+  }
 
   // Close sidebar on route change (mobile)
   useEffect(() => {
@@ -150,6 +158,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           </div>
 
           <button
+            onClick={handleLogout}
             className={cn(
               'mt-2 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-white/60 transition-all duration-200 hover:bg-red-500/15 hover:text-red-300',
               collapsed && 'justify-center px-2'
